@@ -1,11 +1,20 @@
 import java.time.LocalDateTime;
 
 public class Employee {
+    private String employeeId;
     private String employeeName;
     private double salary;
     private LocalDateTime joiningDate;
     private String role;
     private double projectProgress;
+
+    public String getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
+    }
 
     public String getEmployeeName() {
         return employeeName;
