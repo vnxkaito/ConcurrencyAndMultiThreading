@@ -16,7 +16,7 @@ public class EmployeeCsvIO {
         this.csvPath = projectPath.resolve(csvPath);
     }
 
-    public Optional<Employee> read(String employeeName) throws IOException {
+    public Optional<Employee> read(String employeeId) throws IOException {
         lock.readLock().lock();
         try{
             if(!Files.exists(csvPath)){
@@ -31,13 +31,14 @@ public class EmployeeCsvIO {
                     if(p.length < 5){
                         continue;
                     }
-                    if(p[0].equals(employeeName)){
+                    if(p[0].equals(employeeId)){
                         Employee employee = new Employee();
-                        employee.setEmployeeName(p[0]);
-                        employee.setSalary(Double.parseDouble(p[1]));
-                        employee.setJoiningDate(LocalDateTime.parse(p[2]));
-                        employee.setRole(p[3]);
-                        employee.setProjectProgress(Double.parseDouble(p[4]));
+                        employee.setEmployeeId(p[0]);
+                        employee.setEmployeeName(p[1]);
+                        employee.setSalary(Double.parseDouble(p[2]));
+                        employee.setJoiningDate(LocalDateTime.parse(p[3]));
+                        employee.setRole(p[4]);
+                        employee.setProjectProgress(Double.parseDouble(p[5]));
                         return Optional.of(employee);
                     }
                 }
