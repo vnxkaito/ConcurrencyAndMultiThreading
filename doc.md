@@ -30,6 +30,7 @@ Main processes:
 - Batch process employees.
 
 Classes:
-- Employee (Read and Update)
+- Employee (Hold employee data)
+- EmployeeCsvIO (Read and Update)
 - SalaryIncreaseCalculator (Calculate the new salary)
 - ProcessEmployeesSalaryIncreases ( Batch process all employees )
