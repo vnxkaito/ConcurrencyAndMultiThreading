@@ -1,8 +1,10 @@
+import java.awt.image.AreaAveragingScaleFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -48,6 +50,46 @@ public class EmployeeCsvIO {
         }
         finally {
             lock.readLock().unlock();
+        }
+    }
+
+    public void update(Employee employee) throws IOException {
+        lock.writeLock().lock();
+        try{
+            List<String> lines = new ArrayList<>();
+            if (Files.exists(csvPath)){
+                lines = Files.readAllLines(csvPath);
+            }
+
+            String newLine =
+                    employee.getEmployeeId() + "," +
+                    employee.getEmployeeName() + "," +
+                    employee.getSalary() + "," +
+                    employee.getJoiningDate() + "," +
+                    employee.getRole() + "," +
+                    employee.getProjectProgress() + ",";
+
+            boolean updated = false;
+
+            for(int i = 0; i < lines.size(); i++){
+                String line = lines.get(i);
+                if(line == null || line.isBlank()){
+                    continue;
+                }
+                if(line.startsWith(employee.getEmployeeId()+",")){
+                    lines.set(i, newLine);
+                    updated = true;
+                    break;
+                }
+            }
+
+            if(!updated){
+                lines.add(newLine);
+            }
+
+            Files.write(csvPath, lines);
+        } finally {
+            lock.writeLock().unlock();
         }
     }
 }
