@@ -5,9 +5,11 @@ import java.util.Optional;
 
 public class main {
     public static void main(String[] args) throws IOException {
-        EmployeeCsvIO employeeCsvIO = new EmployeeCsvIO(Path.of("data\\Employees.csv"));
-        List<Employee> employees = employeeCsvIO.readAll();
-        System.out.println(employees.size());
+        ProcessEmployeesSalaryIncreases processEmployeesSalaryIncreases = new ProcessEmployeesSalaryIncreases();
+        processEmployeesSalaryIncreases.processAllEmployees();
+//        EmployeeCsvIO employeeCsvIO = new EmployeeCsvIO(Path.of("data\\Employees.csv"));
+//        List<Employee> employees = employeeCsvIO.readAll();
+//        System.out.println(employees.size());
 
 //        Optional<Employee> employee = employeeCsvIO.read("1");
 //        if(employee.isPresent()){
