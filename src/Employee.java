@@ -1,4 +1,6 @@
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 
 public class Employee {
     private String employeeId;
@@ -54,5 +56,9 @@ public class Employee {
 
     public void setProjectProgress(double projectProgress) {
         this.projectProgress = projectProgress;
+    }
+
+    public double getWorkingYears(){
+        return Period.between(LocalDate.now(), this.joiningDate.toLocalDate()).getYears();
     }
 }

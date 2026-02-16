@@ -13,5 +13,8 @@ public class ProcessEmployeesSalaryIncreases {
 
     private static void updateSalaryWithIncrease(Employee employee){
         // run the salary increase logic here
+        if(employee.getProjectProgress() >= 0.6){
+
+        }
     }
 }
