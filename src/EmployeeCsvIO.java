@@ -8,11 +8,12 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class EmployeeCsvIO {
-    private Path csvPath;
+    private final Path csvPath;
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
+    private final static Path projectPath = Path.of(System.getProperty("user.dir"));
 
     public EmployeeCsvIO(Path csvPath){
-        this.csvPath = csvPath;
+        this.csvPath = projectPath.resolve(csvPath);
     }
 
     public Optional<Employee> read(String employeeName) throws IOException {
