@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +29,7 @@ public class EmployeeCsvIO {
 
                     String[] p = line.split(",", -1);
 
-                    if(p.length < 5){
+                    if(p.length < 6){
                         continue;
                     }
                     if(p[0].equals(employeeId)){
@@ -36,7 +37,7 @@ public class EmployeeCsvIO {
                         employee.setEmployeeId(p[0]);
                         employee.setEmployeeName(p[1]);
                         employee.setSalary(Double.parseDouble(p[2]));
-                        employee.setJoiningDate(LocalDateTime.parse(p[3]));
+                        employee.setJoiningDate(LocalDate.parse(p[3]).atStartOfDay());
                         employee.setRole(p[4]);
                         employee.setProjectProgress(Double.parseDouble(p[5]));
                         return Optional.of(employee);
