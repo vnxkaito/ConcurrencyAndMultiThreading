@@ -39,7 +39,11 @@ public class EmployeeCsvIO {
                         employee.setEmployeeId(p[0]);
                         employee.setEmployeeName(p[1]);
                         employee.setSalary(Double.parseDouble(p[2]));
-                        employee.setJoiningDate(LocalDate.parse(p[3]).atStartOfDay());
+                        if (p[3].length() == 10) {
+                            employee.setJoiningDate(LocalDate.parse(p[3]).atStartOfDay());
+                        }else{
+                            employee.setJoiningDate(LocalDateTime.parse(p[3]));
+                        }
                         employee.setRole(p[4]);
                         employee.setProjectProgress(Double.parseDouble(p[5]));
                         return Optional.of(employee);
@@ -47,6 +51,43 @@ public class EmployeeCsvIO {
                 }
             }
             return Optional.empty();
+        }
+        finally {
+            lock.readLock().unlock();
+        }
+    }
+
+    public List<Employee> readAll() throws IOException {
+        lock.readLock().lock();
+        try{
+            List<Employee> employees = new ArrayList<>();
+            if(!Files.exists(csvPath)){
+                return employees;
+            }else{
+                List<String> lines = Files.readAllLines(csvPath);
+                for(int i = 0; i < lines.size(); i++){
+                    String line = lines.get(i);
+
+                    String[] p = line.split(",", -1);
+
+                    if(p.length < 6){
+                        continue;
+                    }
+                    Employee employee = new Employee();
+                    employee.setEmployeeId(p[0]);
+                    employee.setEmployeeName(p[1]);
+                    employee.setSalary(Double.parseDouble(p[2]));
+                    if (p[3].length() == 10) {
+                        employee.setJoiningDate(LocalDate.parse(p[3]).atStartOfDay());
+                    }else{
+                        employee.setJoiningDate(LocalDateTime.parse(p[3]));
+                    }
+                    employee.setRole(p[4]);
+                    employee.setProjectProgress(Double.parseDouble(p[5]));
+                    employees.add(employee);
+                }
+            }
+            return employees;
         }
         finally {
             lock.readLock().unlock();
