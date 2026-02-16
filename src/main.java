@@ -7,7 +7,10 @@ public class main {
         EmployeeCsvIO employeeCsvIO = new EmployeeCsvIO(Path.of("data\\Employees.csv"));
         Optional<Employee> employee = employeeCsvIO.read("1");
         if(employee.isPresent()){
-            System.out.println(employee.get().getEmployeeName());
+            Employee employeeObject = employee.get();
+            System.out.println(employeeObject.getEmployeeName());
+            employeeObject.setEmployeeName(employeeObject.getEmployeeName()+"Updated");
+            employeeCsvIO.update(employeeObject);
         }else{
             System.out.println("Employee not found");
         }
